@@ -8,7 +8,7 @@
 .header {
   font-size: 40px;
   font-weight: 900;
-  background-color: white;
+  background-color: #546e7a;
 }
 
 .divider {
@@ -18,8 +18,10 @@
 }
 
 .item {
-  border: 1px solid #ccc;
-  margin: 24px
+  border-bottom: 1px solid #ccc;
+  margin: 24px;
+  font-size: 26px;
+  font-weight: bold;
 }
 
 .input {
@@ -30,4 +32,13 @@
   display: flex;
   justify-content: center;
   align-self: center;
+}
+
+.footer {
+  background-color: #455a64;
+  color: white;
+  font-size: 20px;
+  margin-top: 10%;
+  bottom: 0;
+  height: 100%;
 }
