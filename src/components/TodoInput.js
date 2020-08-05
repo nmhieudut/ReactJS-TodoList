@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Input, Button, Row, Col, } from 'antd';
+import { Input, Button, Row, Col, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
@@ -17,10 +17,17 @@ export default function TodoInput(props) {
     //add
     const onAddText = () => {
         if (!onAdd) return;
-        const value = {
-            content: addText
-        };
-        onAdd(value);
+        if (addText) {
+            const value = {
+                content: addText
+            };
+            onAdd(value);
+        }
+        else {
+            Modal.error({
+                content: 'Please enter your todo...',
+            });
+        }
         addInput.current.state.value = "";
     }
     const handleAddValueChange = (e) => {
@@ -29,8 +36,12 @@ export default function TodoInput(props) {
     //search
     const onSearchText = () => {
         if (!onSearch) return;
-        if (!searchText) return;
-        onSearch(searchText);
+        if (searchText) onSearch(searchText);
+        else {
+            Modal.error({
+                content: 'Enter something pls...',
+            });
+        }
         searchInput.current.state.value = "";
     }
     const handleSearchValueChange = (e) => {

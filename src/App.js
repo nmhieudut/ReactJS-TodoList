@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout } from 'antd';
+import { Layout, Modal } from 'antd';
 import './App.css';
 import TodoList from "./components/TodoList"
 import { SocialIcon } from 'react-social-icons';
@@ -14,6 +14,11 @@ function App() {
     else setTodo([]);
   }, [])
 
+  const success = (message) => {
+    Modal.success({
+      content: message,
+    });
+  }
   //delete
   const onDelete = (e) => {
     const index = todo.find(x => x.id === e.id);
@@ -21,6 +26,7 @@ function App() {
     const newTodo = [...todo];
     newTodo.splice(index, 1);
     setTodo(newTodo);
+    success("Deleted");
   }
   //add
   const onAdd = (item) => {
@@ -31,6 +37,7 @@ function App() {
     const newTodoList = [...todo];
     newTodoList.unshift(newTodo);
     setTodo(newTodoList);
+    success("Added")
   }
   //search
   const onSearch = (e) => {
@@ -40,11 +47,29 @@ function App() {
   }
   //save
   const onSave = () => {
-    localStorage.setItem("todos", JSON.stringify(todo))
+    if (todo.length > 0) {
+      localStorage.setItem("todos", JSON.stringify(todo));
+      success("Saved to your memory successfully")
+    }
+    else {
+      Modal.error({
+        content: "No todos to save"
+      })
+    }
+
   }
   //clear
   const onClear = () => {
-    localStorage.clear();
+    const storageTodo = JSON.parse(localStorage.getItem('todos'));
+    if (!storageTodo) {
+      Modal.error({
+        content: "Cache is already cleared"
+      });
+    }
+    else {
+      localStorage.clear();
+      success("Successfully cleared")
+    }
   }
   return (
     <div className="App">
@@ -58,7 +83,6 @@ function App() {
           <div>
             <p>Designed by Hieu US/UK</p>
           </div>
-
         </Footer>
       </Layout>
     </div>
